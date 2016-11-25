@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'immigrantApp.wsgi.application'
 DATABASES = {
  'default': {
  'ENGINE': 'django.db.backends.mysql',
- 'NAME': 'ImmigrantDB',
+ 'NAME': 'immigrant_project',
  'USER': 'root',
  'PASSWORD': 'root',
  'HOST': 'localhost',   # Or an IP that your DB is hosted on
