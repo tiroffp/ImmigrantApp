@@ -19,7 +19,6 @@
             <div class="input_div col-md-10 col-md-offset-1">
              <table id="id_roll_table" class="table-striped table-bordered table-responsive table-condensed table-hover text-center">
                  <tr>
-                    <th></th>
                     <th><h3>Name</h3></th>
                     <th><h3>Gender</h3></th>
                     <th><h3>Date of Arrival</h3></th>
@@ -31,15 +30,14 @@
                 </tr>
                 {% for immigrant in immigrants %}
                 <tr>
-                    <td><p>{{ immigrant.0 }}</p></td>
-                    <td><p>{{ immigrant.2 }}, {{immigrant.1 }} </p></td>
-                    <td><p>{{ immigrant.3 }} </p></td>
-                    <td><p>{{ immigrant.4 }} </p></td>
-                    <td><p>{{ immigrant.5}}</p></td>
-                    <td><p>{{ immigrant.7}}</p></td>
-                    <td><p>{{ immigrant.8}}</p></td>
-                    <td><p>{{ immigrant.9}}</p></td>
-                    <td><p>{{ immigrant.6.0}}, {{ immigrant.6.1 }}</p></td>
+                    <td><p>{{ immigrant.immlastname }}, {{immigrant.immfirstname }} </p></td>
+                    <td><p>{{ immigrant.immgender }} </p></td>
+                    <td><p>{{ immigrant.immdate }} </p></td>
+                    <td><p>{{ immigrant.immprocloc.plname}}, {{ immigrant.immprocloc.plcity.cname}}</p></td>
+                    <td><p>{{ immigrant.immeb.country.cname}}</p></td>
+                    <td><p>{{ immigrant.immeb.spokenlang.lname}}</p></td>
+                    <td><p>{{ immigrant.immeb.ethnicity.ename}}</p></td>
+                    <td><p>{{ immigrant.immdestcity.cname}}, {{ immigrant.immdestcity.cstate.sname }}</p></td>
                 </tr>
                 {% endfor %}
             </table>
