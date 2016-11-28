@@ -17,17 +17,34 @@
                 </div>
             </div>
             <div class="input_div col-md-10 col-md-offset-1">
-               <table id="id_roll_table" class="table">
-               {% for immigrant in immigrants %}
+             <table id="id_roll_table" class="table-striped table-bordered table-responsive table-condensed table-hover text-center">
+                 <tr>
+                    <th></th>
+                    <th><h3>Name</h3></th>
+                    <th><h3>Gender</h3></th>
+                    <th><h3>Date of Arrival</h3></th>
+                     <th><h3>Port of Arrival</h3></th>
+                     <th><h3>Home Country</h3></th>
+                     <th><h3>Spoken Language</h3></th>
+                     <th><h3>Ethnic Background</h3></th>
+                     <th><h3>Settled In</h3></th>
+                </tr>
+                {% for immigrant in immigrants %}
                 <tr>
-                <td><p>{{ immigrant.immid }}</p></td><td><p>{{ immigrant.immfirstname }}, {{immigrant.immlastname}} </p></td>
-                  <td>
-            </td>
-        </tr>
-        {% endfor %}
-    </table>
-</div>
-</div>
+                    <td><p>{{ immigrant.0 }}</p></td>
+                    <td><p>{{ immigrant.2 }}, {{immigrant.1 }} </p></td>
+                    <td><p>{{ immigrant.3 }} </p></td>
+                    <td><p>{{ immigrant.4 }} </p></td>
+                    <td><p>{{ immigrant.5}}</p></td>
+                    <td><p>{{ immigrant.7}}</p></td>
+                    <td><p>{{ immigrant.8}}</p></td>
+                    <td><p>{{ immigrant.9}}</p></td>
+                    <td><p>{{ immigrant.6.0}}, {{ immigrant.6.1 }}</p></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
 </div>
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
