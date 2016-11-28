@@ -1,4 +1,4 @@
-from immigrantApp.models import *
+from main.models import *
 
 def getAllImmigrants():
 	return([[imm.immid, imm.immfirstname, imm.immlastname, imm.immgender, imm.immdate, imm.immprocloc.plname, [imm.immdestcity.cname, imm.immdestcity.cstate.sname], imm.immeb.country.cname, imm.immeb.spokenlang.lname, imm.immeb.ethnicity.ename] for imm in Immigrant.objects.all()])
