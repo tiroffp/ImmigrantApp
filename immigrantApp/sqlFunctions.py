@@ -1,4 +1,4 @@
-from models import *
+from main.models import *
 
 def getAllImmigrants():
 	return(Immigrant.objects.all())
