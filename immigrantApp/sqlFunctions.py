@@ -1,25 +1,30 @@
 from main.models import *
 
+# Retrieves all immmigrant records, ordered by last name
 def getAllImmigrants():
-	return([[imm.immid, imm.immfirstname, imm.immlastname, imm.immgender, imm.immdate, imm.immprocloc.plname, [imm.immdestcity.cname, imm.immdestcity.cstate.sname], imm.immeb.country.cname, imm.immeb.spokenlang.lname, imm.immeb.ethnicity.ename] for imm in Immigrant.objects.all()])
+	return(Immigrant.objects.order_by('immlastname'))
 
+# Retrieves all ethnicities, in alphabetical order
 def getEthnicities():
-	return([ethnicity.ename for ethnicity in Ethnicity.objects.all()])
+	return([ethnicity.ename for ethnicity in Ethnicity.objects.order_by('ename')])
 
+# Retrieves all countries, in alphabetical order
 def getCountries():
-	return([country.cname for country in Country.objects.all()])
+	return([country.cname for country in Country.objects.order_by('cname')])
 
+# Retrieves all languages, in alphabetical order
 def getLanguages():
-	return([lang.lname for lang in Languages.objects.all()])
+	return([lang.lname for lang in Languages.objects.order_by('lname')])
 
+# Retrieves all process locations, in alphabetical order
 def getProcessLocations():
-	return([[ploc.plname, ploc.plcity.cname] for ploc in Processlocation.objects.all()])
+	return([[ploc.plname, ploc.plcity.cname] for ploc in Processlocation.objects.order_by('plname')])
 
+# Retrieves all continents, in alphabetical order
 def getContinent():
-	return([cont.cname for cont in Continent.objects.all()])
+	return([cont.cname for cont in Continent.objects.order_by('cname')])
 
-# Given values for the many fields, will return a subset of the immigrants
-#def filterImmigrants(firstName="", lastName, gender, year, country, language, ethnicity, processLocation, destination):
+# Given names values for the many fields, will return a subset of the immigrants
 def filterImmigrants(**filterParams):
 	result = Immigrant.objects.all()
 	if ('firstName' in filterParams):
@@ -56,10 +61,11 @@ def filterImmigrants(**filterParams):
 	return(result)
 
 # Assumes all countries, ethnicity, language, process locations, cities and states exist (user chooses from a list of options)
+# Creates a new immigrant record using the given values
 def createImmigrant(firstName, lastName, gender, date, country, ethnicity, spokenLang, processLocation, destCity, destState):
 	imm = Immigrant()
-	imm.immfirstName = firstName
-	imm.immlastName = lastName
+	imm.immfirstname = firstName
+	imm.immlastname = lastName
 	imm.immgender = gender
 	imm.immdate = date
 	try:
@@ -82,6 +88,7 @@ def createImmigrant(firstName, lastName, gender, date, country, ethnicity, spoke
 
 	imm.save()
 
+# Deletes an immigrant record, using its id
 def deleteImmigrant(idToRemove):
 	immigrant = Immigrant.objects.get(immid=idToRemove)
 	immigrant.delete()
