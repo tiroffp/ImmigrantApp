@@ -259,8 +259,8 @@ INSERT INTO `processlocation` VALUES
 (3,'The Port of Baltimore',31),
 (4,'The Port of Galveston',92),
 (5,'The Port of New Orleans',65),
-(6,'Angel Island',16),
-(7,'The Port of Boston',54);
+(6,'Angel Island',23),
+(7,'The Port of Boston',3);
 
 INSERT INTO `languages` VALUES
 ('Afrikaans'),
