@@ -1,6 +1,7 @@
 from __future__ import unicode_literals
 
 from django.db import models
+#import datetime
 
 class Continent(models.Model):
     cname = models.CharField(db_column='cName', primary_key=True, max_length=200)  # Field name made lowercase.
