@@ -6,23 +6,23 @@ def getAllImmigrants():
 
 # Retrieves all ethnicities, in alphabetical order
 def getEthnicities():
-	return([ethnicity.ename for ethnicity in Ethnicity.objects.order_by('ename')])
+	return(Ethnicity.objects.order_by('ename'))
 
 # Retrieves all countries, in alphabetical order
 def getCountries():
-	return([country.cname for country in Country.objects.order_by('cname')])
+	return(Country.objects.order_by('cname'))
 
 # Retrieves all languages, in alphabetical order
 def getLanguages():
-	return([lang.lname for lang in Languages.objects.order_by('lname')])
+	return(Languages.objects.order_by('lname'))
 
 # Retrieves all process locations, in alphabetical order
 def getProcessLocations():
-	return([[ploc.plname, ploc.plcity.cname] for ploc in Processlocation.objects.order_by('plname')])
+	return(Processlocation.objects.order_by('plname'))
 
 # Retrieves all continents, in alphabetical order
 def getContinent():
-	return([cont.cname for cont in Continent.objects.order_by('cname')])
+	return(Continent.objects.order_by('cname'))
 
 # Given names values for the many fields, will return a subset of the immigrants
 def filterImmigrants(**filterParams):
