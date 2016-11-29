@@ -18,5 +18,6 @@ import main.views as views
 
 urlpatterns = [
     # url(r'^admin/', include(admin.site.urls)),
-    url(r'^$', views.home_page, name='home')
+    url(r'^$', views.home_page, name='home'),
+    url(r'^delete/(?P<id>\d+)/$',views.delete_imm, name='del'),
 ]

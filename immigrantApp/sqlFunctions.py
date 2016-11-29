@@ -25,39 +25,23 @@ def getContinent():
 	return(Continent.objects.order_by('cname'))
 
 # Given names values for the many fields, will return a subset of the immigrants
-def filterImmigrants(**filterParams):
-	result = Immigrant.objects.all()
-	if ('firstName' in filterParams):
-		result = result.filter(immfirstname=filterParams['firstName'])
-	if ('lastName' in filterParams):
-		result = result.filter(immlastname=filterParams['lastName'])
-	if ('gender' in filterParams):
-		result = result.filter(immgender=filterParams['gender'])
-	if ('year' in filterParams):
-		result = result.filter(immdate__year=filterParams['year'])
-	if ('country' in filterParams):
-		#countryIDs = [country.cname for country in Country.objects.filter(cname=country)]
-		#ebIDs = [eb.ebid for eb in Ethnicbackground.objects.filter(country__in=countryIDs)]
-		#result = result.filter(immeb__in=ebIDs)
-		result = result.filter(immeb__country=filterParams['country'])
-	if ('language' in filterParams):
-		#languageIDs = [lang.lname for lang in Languages.objects.filter(lname=language)]
-		#ebIDs = [eb.ebid for eb in Ethnicbackground.objects.filter(spokenlang__in=languageIDs)]
-		#result = result.filter(immeb__in=ebIDs)
-		result = result.filter(immeb__spokenlang=filterParams['language'])
-	if ('ethnicity' in filterParams):
-		#ethnicIDs = [ethnicity.ename for ethnicity in Ethnicity.objects.filter(ename=ethnicity)]
-		#ebIDs = [eb.ebid for eb in Ethnicbackground.objects.filter(ethnicity__in=ethnicIDs)]
-		#result = result.filter(immeb__in=ebIDs)
-		result = result.filter(immeb__ethnicity=filterParams['ethnicity'])
-	if ('processLocation' in filterParams):
-		#plocIDs = [ploc.plid for ploc in Processlocation.objects.filter(plname=processLocation)]
-		#result = result.filter(immprocloc__in=plocIDs)
-		result = result.filter(immprocloc__plname=filterParams['processLocation'])
-	if ('destination' in filterParams):
-		#cityIDs = [city.cid for city in City.objects.filter(cname=destination)]
-		#result = result.filter(immdestcity__in=cityIDs)
-		result = result.filter(immdestcity__cname=filterParams['destination'])
+def filterImmigrants(firstName, lastName, gender, country, ethnicity, spokenLang, procLoc, **filterParams):
+	result = Immigrant.objects.order_by('immlastname')
+	if (firstName != ''):
+		result = result.filter(immfirstname=firstName)
+	if (lastName != ''):
+		result = result.filter(immlastname=lastName)
+	if (gender != ''):
+		result = result.filter(immgender=gender)
+	if (country != ''):
+		result = result.filter(immeb__country=country)
+	if (ethnicity != ''):
+		result = result.filter(immeb__ethnicity=ethnicity)
+	if (spokenLang != ''):
+		result = result.filter(immeb__spokenlang=spokenLang)
+	if (procLoc != ''):
+		result = result.filter(immprocloc__plname=procLoc)
+	
 	return(result)
 
 # Assumes all countries, ethnicity, language, process locations, cities and states exist (user chooses from a list of options)
@@ -69,14 +53,40 @@ def createImmigrant(firstName, lastName, gender, date, country, ethnicity, spoke
 	imm.immgender = gender
 	imm.immdate = date
 	try:
+		# Attempts to find that country
+		c = Country.objects.get(cname=country)
+	except Country.DoesNotExist:
+		# If that country is not found, creates it
+		c = Country(cname=country)
+		c.save()
+
+	try:
+		# Attempts to find that ethnicity
+		e = Ethnicity.objects.get(ename=ethnicity)
+	except Ethnicbackground.DoesNotExist:
+		# If that combination is not found, creates it
+		e = Ethnicity(ename=ethnicity)
+		e.save()
+
+	try:
+		# Attempts to find that ethnicity
+		sl = Languages.objects.get(lname=spokenLang)
+	except Ethnicbackground.DoesNotExist:
+		# If that combination is not found, creates it
+		sl = Languages(lname=spokenLang)
+		sl.save()
+
+	try:
 		# Attempts to find that specific ethnic background combination
 		eb = Ethnicbackground.objects.get(country=country, ethnicity=ethnicity, spokenlang=spokenLang)
 	except Ethnicbackground.DoesNotExist:
 		# If that combination is not found, creates it
-		eb = Ethnicbackground(country=country, ethnicity=ethnicity, spokenlang=spokenLang)
+		eb = Ethnicbackground(country=c, ethnicity=e, spokenlang=sl)
 		eb.save()
+	
 	imm.immeb = eb
 	imm.immprocloc = Processlocation.objects.get(plname=processLocation)
+	
 	try:
 		# Tries to find the city (that matches the state)
 		city = City.objects.get(cname=destCity, cstate=destState)
@@ -84,6 +94,7 @@ def createImmigrant(firstName, lastName, gender, date, country, ethnicity, spoke
 		# If that city doesn't exist, creates it
 		city = City(cname=destCity, cstate=destState)
 		city.save()
+	
 	imm.immdestcity = city
 
 	imm.save()

@@ -1,6 +1,8 @@
 from django.shortcuts import render
-from immigrantApp.sqlFunctions import getAllImmigrants
+from immigrantApp.sqlFunctions import filterImmigrants, deleteImmigrant
 from main.forms import ImmFilterForm
+from django.http import HttpResponseRedirect
+from django.core.urlresolvers import reverse
 
 
 # Create your views here.
@@ -16,5 +18,12 @@ def home_page(request):
     }
 
     form = ImmFilterForm(data)
-    immigrants = getAllImmigrants()
+    immigrants = filterImmigrants(firstName=data['firstname'], lastName=data['lastname'], gender=data['gender'], country=data['country'], 
+    	ethnicity=data['ethnicity'], spokenLang=data['spokenlang'], procLoc=data['processLocation'])
     return render(request, 'index.html', {'immigrants': immigrants, 'form' : form})
+
+
+def delete_imm(request, id):
+
+	deleteImmigrant(id)
+	return HttpResponseRedirect(reverse(home_page))
