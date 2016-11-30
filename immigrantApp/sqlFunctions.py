@@ -24,6 +24,10 @@ def getProcessLocations():
 def getContinent():
 	return(Continent.objects.order_by('cname'))
 
+# Retrieves all states, in alphabetical order
+def getStates():
+	return(State.objects.order_by('sname'))
+
 # Given names values for the many fields, will return a subset of the immigrants
 def filterImmigrants(firstName, lastName, gender, country, ethnicity, spokenLang, procLoc, **filterParams):
 	result = Immigrant.objects.order_by('immlastname')
@@ -46,24 +50,27 @@ def filterImmigrants(firstName, lastName, gender, country, ethnicity, spokenLang
 
 # Assumes all countries, ethnicity, language, process locations, cities and states exist (user chooses from a list of options)
 # Creates a new immigrant record using the given values
-def createImmigrant(firstName, lastName, gender, date, country, ethnicity, spokenLang, processLocation, destCity, destState):
+def createImmigrant(firstName, lastName, gender, date, country, continent, ethnicity, spokenLang, processLocation, destCity, destState):
 	imm = Immigrant()
 	imm.immfirstname = firstName
 	imm.immlastname = lastName
 	imm.immgender = gender
 	imm.immdate = date
+
+	cont = Continent.objects.get(cname=continent)
+	
 	try:
 		# Attempts to find that country
 		c = Country.objects.get(cname=country)
 	except Country.DoesNotExist:
 		# If that country is not found, creates it
-		c = Country(cname=country)
+		c = Country(cname=country, ccontinent=cont)
 		c.save()
 
 	try:
 		# Attempts to find that ethnicity
 		e = Ethnicity.objects.get(ename=ethnicity)
-	except Ethnicbackground.DoesNotExist:
+	except Ethnicity.DoesNotExist:
 		# If that combination is not found, creates it
 		e = Ethnicity(ename=ethnicity)
 		e.save()
@@ -71,7 +78,7 @@ def createImmigrant(firstName, lastName, gender, date, country, ethnicity, spoke
 	try:
 		# Attempts to find that ethnicity
 		sl = Languages.objects.get(lname=spokenLang)
-	except Ethnicbackground.DoesNotExist:
+	except Languages.DoesNotExist:
 		# If that combination is not found, creates it
 		sl = Languages(lname=spokenLang)
 		sl.save()
@@ -87,12 +94,14 @@ def createImmigrant(firstName, lastName, gender, date, country, ethnicity, spoke
 	imm.immeb = eb
 	imm.immprocloc = Processlocation.objects.get(plname=processLocation)
 	
+	state = State.objects.get(sname=destState)
+
 	try:
 		# Tries to find the city (that matches the state)
-		city = City.objects.get(cname=destCity, cstate=destState)
+		city = City.objects.get(cname=destCity, cstate=state)
 	except City.DoesNotExist:
 		# If that city doesn't exist, creates it
-		city = City(cname=destCity, cstate=destState)
+		city = City(cname=destCity, cstate=state)
 		city.save()
 	
 	imm.immdestcity = city
