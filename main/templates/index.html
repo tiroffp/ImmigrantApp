@@ -11,75 +11,75 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-md-10 col-md-offset-1 jumbotron">
-                <div class="text-center">
+            <div class="col-md-10 col-md-offset-1 jumbotron text-center">
+            <div class="col-md-12">
                     <h1>Immigrant Database</h1>
+                </div>
+                <div class="col-md-12">
+                    <form action="/create/">
+                        <input class="text-center btn btn-primary" type="submit" value="Create Immigrant Record" />
+                    </form>
                 </div>
             </div>
             <div class="col-md-10 col-md-offset-1">
                 <form method="get">
                     <table id="filter-imm-table" style="margin-left: auto;margin-right: auto;">
-                         <tr>
-                            <td><p>First Name:</p></td>
-                            <td>{{form.firstname}}</td>
-                            <td><p>Last Name:&nbsp;</p></td>
-                            <td>{{form.lastname}}</td>
-                            <td><p>Gender:&nbsp;</p></td>
-                            <td>{{form.gender}}</td>
-                        </tr>
-                        <tr>
-                            <td><p>Process Location:&nbsp;</p></td>
-                            <td>{{form.processLocation}}</td>
-                            <td><p>Country:</p></td>
-                            <td>{{form.country}}</td>
-                        </tr>
-                        <tr>
-                            <td><p>Language:</p></td>
-                            <td>{{form.spokenlang}}&nbsp;</td>
-                            <td><p>Ethnicity:</p></td>
-                            <td>{{form.ethnicity}}</td>
-                        </tr>
-                    </table>
-                    <div class="text-center">
-                        <input type="submit" value="Filter Records" />
-                    </div>
-                </form>
-            </div>
-            <div class="text-center">
-                <form action="/create/">
-                    <input type="submit" value="Create Immigrant Record" />
-                </form>
-            </div>
-            <br>
-            <div class="input_div col-md-10 col-md-offset-1">
-             <table id="id_roll_table" class="table-striped table-bordered table-responsive table-condensed table-hover text-center">
-                 <tr>
-                    <th><h3>Name</h3></th>
-                    <th><h3>Gender</h3></th>
-                    <th><h3>Date of Arrival</h3></th>
-                     <th><h3>Port of Arrival</h3></th>
-                     <th><h3>Home Country</h3></th>
-                     <th><h3>Spoken Language</h3></th>
-                     <th><h3>Ethnic Background</h3></th>
-                     <th><h3>Settled In</h3></th>
-                     <th><h3>Action(s)</h3></th>
-                </tr>
-                {% for immigrant in immigrants %}
-                <tr>
-                    <td><p>{{ immigrant.immlastname }}, {{immigrant.immfirstname }} </p></td>
-                    <td><p>{{ immigrant.immgender }} </p></td>
-                    <td><p>{{ immigrant.immdate }} </p></td>
-                    <td><p>{{ immigrant.immprocloc.plname}}, {{ immigrant.immprocloc.plcity.cname}}</p></td>
-                    <td><p>{{ immigrant.immeb.country.cname}}</p></td>
-                    <td><p>{{ immigrant.immeb.spokenlang.lname}}</p></td>
-                    <td><p>{{ immigrant.immeb.ethnicity.ename}}</p></td>
-                    <td><p>{{ immigrant.immdestcity.cname}}, {{ immigrant.immdestcity.cstate.sname }}</p></td>
-                    <td><a> Edit</a><br><a href="/delete/{{ immigrant.immid }}">Delete</a></td>
-                </tr>
-                {% endfor %}
-            </table>
+                       <tr>
+                        <td><p>First Name:</p></td>
+                        <td>{{form.firstname}}</td>
+                        <td><p>Last Name:&nbsp;</p></td>
+                        <td>{{form.lastname}}</td>
+                        <td><p>Gender:&nbsp;</p></td>
+                        <td>{{form.gender}}</td>
+                    </tr>
+                    <tr>
+                        <td><p>Process Location:&nbsp;</p></td>
+                        <td>{{form.processLocation}}</td>
+                        <td><p>Country:</p></td>
+                        <td>{{form.country}}</td>
+                    </tr>
+                    <tr>
+                        <td><p>Language:</p></td>
+                        <td>{{form.spokenlang}}&nbsp;</td>
+                        <td><p>Ethnicity:</p></td>
+                        <td>{{form.ethnicity}}</td>
+                    </tr>
+                </table>
+                <div class="text-center">
+                    <input class="btn btn-primary" type="submit" value="Filter Records" />
+                </div>
+            </form>
+                    <br>
         </div>
+        <div class="input_div col-md-10 col-md-offset-1">
+           <table id="id_roll_table" class="table-striped table-bordered table-responsive table-condensed table-hover text-center">
+               <tr>
+                <th><h3>Name</h3></th>
+                <th><h3>Gender</h3></th>
+                <th><h3>Date of Arrival</h3></th>
+                <th><h3>Port of Arrival</h3></th>
+                <th><h3>Home Country</h3></th>
+                <th><h3>Spoken Language</h3></th>
+                <th><h3>Ethnic Background</h3></th>
+                <th><h3>Settled In</h3></th>
+                <th><h3>Action(s)</h3></th>
+            </tr>
+            {% for immigrant in immigrants %}
+            <tr>
+                <td><p>{{ immigrant.immlastname }}, {{immigrant.immfirstname }} </p></td>
+                <td><p>{{ immigrant.immgender }} </p></td>
+                <td><p>{{ immigrant.immdate }} </p></td>
+                <td><p>{{ immigrant.immprocloc.plname}}, {{ immigrant.immprocloc.plcity.cname}}</p></td>
+                <td><p>{{ immigrant.immeb.country.cname}}</p></td>
+                <td><p>{{ immigrant.immeb.spokenlang.lname}}</p></td>
+                <td><p>{{ immigrant.immeb.ethnicity.ename}}</p></td>
+                <td><p>{{ immigrant.immdestcity.cname}}, {{ immigrant.immdestcity.cstate.sname }}</p></td>
+                <td><a> Edit</a><br><a href="/delete/{{ immigrant.immid }}">Delete</a></td>
+            </tr>
+            {% endfor %}
+        </table>
     </div>
+</div>
 </div>
 <div class="row">
     <div class="col-md-6 col-md-offset-3">
