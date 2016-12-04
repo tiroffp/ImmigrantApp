@@ -6,13 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Immigrant Database</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.6/datatables.min.css"/>
 </head>
 
 <body>
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1 jumbotron text-center">
-            <div class="col-md-12">
+                <div class="col-md-12">
                     <h1>Immigrant Database</h1>
                 </div>
                 <div class="col-md-12">
@@ -24,7 +25,7 @@
             <div class="col-md-10 col-md-offset-1">
                 <form method="get">
                     <table id="filter-imm-table" style="margin-left: auto;margin-right: auto;">
-                       <tr>
+                     <tr>
                         <td><p>First Name:</p></td>
                         <td>{{form.firstname}}</td>
                         <td><p>Last Name:&nbsp;</p></td>
@@ -49,34 +50,38 @@
                     <input class="btn btn-primary" type="submit" value="Filter Records" />
                 </div>
             </form>
-                    <br>
+            <br>
         </div>
         <div class="input_div col-md-10 col-md-offset-1">
-           <table id="id_roll_table" class="table-striped table-bordered table-responsive table-condensed table-hover text-center">
-               <tr>
-                <th><h3>Name</h3></th>
-                <th><h3>Gender</h3></th>
-                <th><h3>Date of Arrival</h3></th>
-                <th><h3>Port of Arrival</h3></th>
-                <th><h3>Home Country</h3></th>
-                <th><h3>Spoken Language</h3></th>
-                <th><h3>Ethnic Background</h3></th>
-                <th><h3>Settled In</h3></th>
-                <th><h3>Action(s)</h3></th>
-            </tr>
-            {% for immigrant in immigrants %}
-            <tr>
-                <td><p>{{ immigrant.immlastname }}, {{immigrant.immfirstname }} </p></td>
-                <td><p>{{ immigrant.immgender }} </p></td>
-                <td><p>{{ immigrant.immdate }} </p></td>
-                <td><p>{{ immigrant.immprocloc.plname}}, {{ immigrant.immprocloc.plcity.cname}}</p></td>
-                <td><p>{{ immigrant.immeb.country.cname}}</p></td>
-                <td><p>{{ immigrant.immeb.spokenlang.lname}}</p></td>
-                <td><p>{{ immigrant.immeb.ethnicity.ename}}</p></td>
-                <td><p>{{ immigrant.immdestcity.cname}}, {{ immigrant.immdestcity.cstate.sname }}</p></td>
-                <td><a> Edit</a><br><a href="/delete/{{ immigrant.immid }}">Delete</a></td>
-            </tr>
-            {% endfor %}
+         <table id="id_immigrant_table" class="table-striped table-bordered table-responsive table-condensed table-hover text-center">
+             <thead>
+             <tr class='text-center'>
+                    <th><h3>Name</h3></th>
+                    <th><h3>Gender</h3></th>
+                    <th><h3>Date of Arrival</h3></th>
+                    <th><h3>Port of Arrival</h3></th>
+                    <th><h3>Home Country</h3></th>
+                    <th><h3>Spoken Language</h3></th>
+                    <th><h3>Ethnic Background</h3></th>
+                    <th><h3>Settled In</h3></th>
+                    <th><h3>Action(s)</h3></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for immigrant in immigrants %}
+                <tr>
+                    <td><p>{{ immigrant.immlastname }}, {{immigrant.immfirstname }} </p></td>
+                    <td><p>{{ immigrant.immgender }} </p></td>
+                    <td><p>{{ immigrant.immdate }} </p></td>
+                    <td><p>{{ immigrant.immprocloc.plname}}, {{ immigrant.immprocloc.plcity.cname}}</p></td>
+                    <td><p>{{ immigrant.immeb.country.cname}}</p></td>
+                    <td><p>{{ immigrant.immeb.spokenlang.lname}}</p></td>
+                    <td><p>{{ immigrant.immeb.ethnicity.ename}}</p></td>
+                    <td><p>{{ immigrant.immdestcity.cname}}, {{ immigrant.immdestcity.cstate.sname }}</p></td>
+                    <td><a> Edit</a><br><a href="/delete/{{ immigrant.immid }}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
         </table>
     </div>
 </div>
@@ -87,11 +92,18 @@
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script>
     jQuery(document).ready(function ($) {
+        $('#id_immigrant_table').DataTable();
         $('input').on('keypress', function () {
             $('.has-error').hide();
         });
+    });
+    jQuery(window).on('load', function () {
+        console.log('log')
+        $('dataTables_paginate').addClass('btn-group');
+        $('pageinate_button').addClass('btn-default');
     });
 </script>
 </body>
