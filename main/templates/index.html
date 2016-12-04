@@ -74,7 +74,7 @@
                 <td><p>{{ immigrant.immeb.spokenlang.lname}}</p></td>
                 <td><p>{{ immigrant.immeb.ethnicity.ename}}</p></td>
                 <td><p>{{ immigrant.immdestcity.cname}}, {{ immigrant.immdestcity.cstate.sname }}</p></td>
-                <td><a> Edit</a><br><a href="/delete/{{ immigrant.immid }}">Delete</a></td>
+                <td><a href="/edit/{{ immigrant.immid }}"> Edit</a><br><a href="/delete/{{ immigrant.immid }}">Delete</a></td>
             </tr>
             {% endfor %}
         </table>
