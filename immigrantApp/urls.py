@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^delete/(?P<id>\d+)/$', views.delete_imm, name='del'),
     url(r'^create/$', views.create_page, name='create'),
     url(r'^insert/$', views.insert_record, name='insert'),
-    url(r'^edit/$', views.edit_record, name='edit'),
+    url(r'^edit/(?P<id>\d+)/$', views.edit_page, name='edit'),
+    url(r'^make-edit/(?P<id>\d+)/$', views.edit_record, name='make-edit'),
 ]
